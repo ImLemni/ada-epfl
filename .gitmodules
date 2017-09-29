@@ -1,0 +1,3 @@
+[submodule "assignments"]
+	path = assignments
+	url = ../../epfl-ada/ADA2017-Homeworks.git
