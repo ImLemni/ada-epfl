@@ -1,25 +1,36 @@
-def get_tqdm():
-    try:
-        import tqdm
-        return tqdm.tqdm
-    except:
-        return None
+try:
+    from tqdm import tqdm
+except:
+    tqdm = None
+
+try:
+    from ipywidgets import FloatProgress
+    from IPython.display import display
+except:
+    FloatProgress, display = None, None
 
 
-def get_ipython():
-    try:
-        from ipywidgets import FloatProgress
-        from IPython.display import display
-        return FloatProgress, display
-    except:
-        return None
+class NoOpProgressBar():
+    """
+    Represents a progressbar that does not do anything
+    """
 
+    def __init__(self, total: int):
+        self.total = total
+        self.progress = 0
 
-tqdm = get_tqdm()
-ipython = None  # get_ipython()
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        pass
+
+    def update(self, change: int):
+        self.progress += change
+
 
 if tqdm is not None:
-    class ProgressBar():
+    class TqdmProgressBar():
         def __init__(self, total: int):
             self.total = total
             self.progress = 0
@@ -39,11 +50,9 @@ if tqdm is not None:
             self.progress += change
             if self._bar is not None:
                 self._bar.update(change)
-elif ipython is not None:
-    FloatProgress, display = ipython
 
-
-    class ProgressBar():
+if FloatProgress is not None and display is not None:
+    class IPythonProgressBar():
         def __init__(self, total: int):
             self.total = total
             self.progress = 0
@@ -60,20 +69,11 @@ elif ipython is not None:
         def update(self, change: int):
             self.progress += change
             self._bar.value = self.progress
+
+if tqdm is not None:
+    ProgressBar = TqdmProgressBar
 else:
-    class ProgressBar():
-        def __init__(self, total: int):
-            self.total = total
-            self.progress = 0
-
-        def __enter__(self):
-            return self
-
-        def __exit__(self, *args):
-            pass
-
-        def update(self, change: int):
-            self.progress += change
+    ProgressBar = NoOpProgressBar
 
 if __name__ == "__main__":
     import time
