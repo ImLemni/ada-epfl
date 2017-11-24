@@ -12,8 +12,6 @@ def get_dict_titles(urlList):
             for row in table.findAll("tr"):
                 cells = row.findAll("td")
                 if len(cells) == 2:
-                    # Warning : we should use findall for the movies as there are sometimes
-                    # more than 1 adaptation
                     movie_data = cells[1].findAll(text=True)
                     movie_titles = [movie_data[0]]
                     movie_titles_mult = [value for index, value in enumerate(
@@ -23,9 +21,9 @@ def get_dict_titles(urlList):
     return titles
 
 
-urlList = ["https://en.wikipedia.org/wiki/List_of_fiction_works_made_into_feature_films_(0%E2%80%939_and_A%E2%80%93C)",
-           "https://en.wikipedia.org/wiki/List_of_fiction_works_made_into_feature_films_(D%E2%80%93J)",
-           "https://en.wikipedia.org/wiki/List_of_fiction_works_made_into_feature_films_(K%E2%80%93R)",
-           "https://en.wikipedia.org/wiki/List_of_fiction_works_made_into_feature_films_(S%E2%80%93Z)"]
-movies = get_dict_titles(urlList)
-len(movies.keys())
+if __name__ == "__main__":
+    urlList = ["https://en.wikipedia.org/wiki/List_of_fiction_works_made_into_feature_films_(0%E2%80%939_and_A%E2%80%93C)",
+               "https://en.wikipedia.org/wiki/List_of_fiction_works_made_into_feature_films_(D%E2%80%93J)",
+               "https://en.wikipedia.org/wiki/List_of_fiction_works_made_into_feature_films_(K%E2%80%93R)",
+               "https://en.wikipedia.org/wiki/List_of_fiction_works_made_into_feature_films_(S%E2%80%93Z)"]
+    print(get_dict_titles(urlList))

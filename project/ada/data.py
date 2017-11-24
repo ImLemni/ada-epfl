@@ -3,6 +3,7 @@ import os
 import json
 from ada.progressbar import ProgressBar
 from ada.locations import get_abs_path
+from ada.locations import get_abs_data_path
 
 
 def read_json_file(file_path, limit, show_progress_bar=True):
@@ -38,8 +39,8 @@ def read_gzip_file(file_path, limit, show_progress_bar=True):
 
 
 def read_data_file(file_name, limit, show_progress_bar=True):
-    json_path = get_abs_path("data", f"{file_name}.json")
-    gzip_path = get_abs_path("data", f"{file_name}.json.gz")
+    json_path = get_abs_data_path("", f"{file_name}.json")
+    gzip_path = get_abs_data_path("", f"{file_name}.json.gz")
     if os.path.isfile(json_path):
         return read_json_file(json_path, limit, show_progress_bar)
     else:
