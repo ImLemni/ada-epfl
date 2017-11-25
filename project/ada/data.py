@@ -11,9 +11,9 @@ from ada.locations import get_abs_data_path
 
 def get_path(data_name: str, use_gzip=True) -> str:
     if use_gzip:
-        return get_abs_path("data", f"{data_name}.json.gz")
+        return get_abs_data_path("", f"{data_name}.json.gz")
     else:
-        return get_abs_path("data", f"{data_name}.json")
+        return get_abs_data_path("", f"{data_name}.json")
 
 
 def read_json_file(file_path: str, limit: Optional[int], is_gzip: bool, show_progress_bar: bool = True):

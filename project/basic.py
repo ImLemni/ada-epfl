@@ -2,7 +2,9 @@ import pandas as pd
 import gzip
 import os
 from tqdm import tqdm
-from getListOfBooks import get_dict_titles
+from ada import getListOfBooks
+from ada import data
+from ada import progressbar
 DATAPATH = "/media/lemni/HDD Flo/ADA"
 
 
@@ -39,9 +41,12 @@ df_reviews = getDF(os.path.join(DATAPATH,
 df_meta = getDF(os.path.join(DATAPATH, 'meta_Movies_and_TV.json.gz'), 208321)
 df_merged = df_reviews.merge(df_meta, left_on='asin', right_on='asin',
                              how='left', copy=False)
-dict_titles = get_dict_titles("https://en.wikipedia.org/wiki/List_of_fiction\
+dict_titles = getListOfBooks.get_dict_titles("https://en.wikipedia.org/wiki/List_of_fiction\
             _works_made_into_feature_films_(D%E2%80%93J)")
 pattern = '|'.join(dict_titles.values()).lower()
 df_filtered = df_merged[df_merged["title"].str.lower().str.contains(pattern,na=False)]
 # TODO replace the previous line with a text distance
 print(df_filtered)
+df_reviews = getDF(os.path.join(DATAPATH,
+                                'reviews_Books.json.gz'), 22507155)
+df_reviews.head(15)

@@ -73,7 +73,7 @@ if FloatProgress is not None and display is not None:
 if tqdm is not None:
     ProgressBar = TqdmProgressBar
 else:
-    ProgressBar = NoOpProgressBar
+    ProgressBar = IPythonProgressBar
 
 if __name__ == "__main__":
     import time
