@@ -129,20 +129,13 @@ def left_join(left, right, key, comparator=natural_comparator):
 
 
 if __name__ == "__main__":
-    # movies = read_data("meta_movies", None)
-    #
-    #
+    movies = read_data("meta_movies", None)
+
+
     def comparator(left, right):
         return natural_comparator(left["asin"], right["asin"])
 
 
-    #
-    #
-    # asin_movies = chunked_merge_sort(movies, comparator)
+    meta_movies_asin_sorted = chunked_merge_sort(movies, comparator)
 
-    movies0 = read_data("chunked_merge_sort.part0", None)
-    movies1 = read_data("chunked_merge_sort.part1", None)
-    movies2 = read_data("chunked_merge_sort.part2", None)
-    asin_movies = merge_many_sorted([movies0, movies1, movies2], comparator)
-
-    write_data("meta_movies_asin_sorted", asin_movies)
+    write_data("meta_movies_asin_sorted", meta_movies_asin_sorted)

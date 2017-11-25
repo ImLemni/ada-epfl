@@ -17,15 +17,42 @@ def is_sorted_by_asin(entries):
     return True
 
 
+def is_sorted_asin_unique(entries):
+    first = True
+    prev = None
+    for i, entry in enumerate(entries):
+        if first:
+            prev = entry
+            first = False
+            continue
+        if prev["asin"] == entry["asin"]:
+            print("Non unique:")
+            print(f"Index {i - 1}: {prev}")
+            print(f"Index {i}: {entry}")
+            return False
+    return True
+
+
 if __name__ == "__main__":
-    print("Testing if meta_videos is sorted by `asin`:")
-    print(is_sorted_by_asin(read_data("meta_videos", None)))
+    check_sorted = [
+        "meta_videos",
+        "meta_movies",
+        "meta_books",
+        "meta_videos-asin",
+        "meta_movies-asin",
+        "meta_books-asin",
+    ]
 
-    print("Testing if meta_movies is sorted by `asin`:")
-    print(is_sorted_by_asin(read_data("meta_movies", None)))
+    for in_name in check_sorted:
+        print(f"Testing if {in_name} is sorted by `asin`:")
+        print(is_sorted_by_asin(read_data(in_name, None)))
 
-    print("Testing if meta_books is sorted by `asin`:")
-    print(is_sorted_by_asin(read_data("meta_books", None)))
+    check_unique_asin = [
+        "meta_videos-asin",
+        "meta_movies-asin",
+        "meta_books-asin",
+    ]
 
-    print("Testing if meta_movies_asin_sorted is sorted by `asin`:")
-    print(is_sorted_by_asin(read_data("meta_movies_asin_sorted", None)))
+    for in_name in check_unique_asin:
+        print(f"Testing if {in_name} has unique `asin`:")
+        print(is_sorted_asin_unique(read_data(in_name, None)))
