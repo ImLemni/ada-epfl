@@ -38,12 +38,12 @@ for k, v in wiki_dict.items():
             product_to_franchise[book_product['asin']] = franchise_id
     franchise_id += 1 if associate else 0
 
+
 movies_df = pd.read_json("filtered_merged_Movies.json", orient='records')
 books_df = pd.read_json("filtered_merged_Books.json", orient='records')
 
 movies_df = filter_merged_df(movies_df)
 movies_df = add_franchise_id(movies_df,product_to_franchise)
-movies_df.head(5)
 movies_df.to_json("merged_clean_Movies.json", orient='records')
 books_df = filter_merged_df(books_df)
 books_df = add_franchise_id(books_df,product_to_franchise)
