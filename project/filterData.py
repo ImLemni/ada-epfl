@@ -58,6 +58,8 @@ def get_matching_product():
                 books_association[title].append(book_line)
     print(f"Number of books selected: {sum([1 if len(v) > 0 else 0 for _, v in books_association.items()])}")
 
+    matching_book = []
+    matching_movies = []
     total_selected = 0
     for k, v in dict_books_movies.items():
         associate = False
@@ -65,7 +67,17 @@ def get_matching_product():
             for mov in v:
                 if len(movies_association[clean_title(mov)]) > 0:
                     associate = True
-                    break
+                    matching_movies.append(clean_title(mov))
+        if associate:
+            matching_book.append(clean_title(k))
         total_selected += 1 if associate else 0
     print(f"Number of association book/movies : {total_selected}")
-    return books_association,movies_association
+
+    books_assocations_matching = {}
+    movies_association_matching = {}
+    for book in matching_book:
+        books_assocations_matching[book] = books_association[book]
+    for movie in matching_movies:
+        movies_association_matching[movie] = movies_association[movie]
+
+    return dict_books_movies, books_assocations_matching, movies_association_matching
