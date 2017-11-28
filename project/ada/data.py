@@ -7,6 +7,11 @@ from ada.progressbar import ProgressBar, NoOpProgressBar
 from ada.locations import get_abs_data_path
 
 
+ITEMS_PER_FILE = {
+    "meta_Movies_and_TV": 208321,
+}
+
+
 def get_path(data_name: str, use_gzip=True) -> str:
     if use_gzip:
         return get_abs_data_path(f"{data_name}.json.gz")
@@ -28,7 +33,7 @@ def read_json_file(file_path: str, limit: Optional[int], is_gzip: bool, show_pro
                     break
 
 
-def read_data(data_name, limit, show_progress_bar=True):
+def read_data(data_name, limit=None, show_progress_bar=True):
     json_path = get_path(data_name, False)
     gzip_path = get_path(data_name, True)
     if os.path.isfile(json_path):

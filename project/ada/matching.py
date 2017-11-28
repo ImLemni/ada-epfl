@@ -1,3 +1,4 @@
+import re
 import requests
 from bs4 import BeautifulSoup
 
@@ -44,3 +45,45 @@ def scrap_wikipedia_list(html: str):
                              movie_data[(index - 1) % len(movie_data)] == '\n']
         result[book_title] = list(set(movie_titles + movie_titles_mult))
     return result
+
+
+def normalize_title(title):
+    """
+    Normalizes the title by removing punctuation, extra spaces and parenthesized groups
+    """
+    title = title.lower()
+    # title = sub("\((.*film.*|.*movie.*)\)", "", title)
+    title = re.sub(r"\(.*\)", "", title)  # Remove parenthesized groups
+    title = re.sub(r"\s+", " ", title)  # Replace consecutive whitespaces by a single space
+    title = title.strip()
+    title = re.sub(r"(?:[\[\](),.!?;:]|dvd|vhs)", "", title)  # Remove punctuation
+    return title
+
+
+def group_meta_by_title(entries, raw_titles):
+    """
+    Returns a dictionary from normalized titles (`str`) to lists of matching metadata.
+    It keeps only the entries with a title matching one of those in `raw_titles`:
+    `raw_titles` acts as a filter.
+    """
+    result = {}
+    cleaned_titles = set()
+    for raw_title in raw_titles:
+        cleaned_titles.add(normalize_title(raw_title))
+
+    for entry in entries:
+        if "title" not in entry:
+            continue
+        cleaned_title = normalize_title(entry["title"])
+        if cleaned_title not in cleaned_titles:
+            continue
+
+        if cleaned_title not in result:
+            result[cleaned_title] = []
+        result[cleaned_title].append(entry)
+
+    return result
+
+
+if __name__ == "__main__":
+    print(get_wikipedia_matching())
