@@ -85,5 +85,29 @@ def group_meta_by_title(entries, raw_titles):
     return result
 
 
+# def add_franchise_id(df, franchise_dict):
+#     df['franchise_id']=df['asin'].apply(lambda x: franchise_dict[x])
+#     return df
+#
+# wiki_dict, books_match, movies_match = filterData.get_matching_product()
+#
+#
+# product_to_franchise = {}
+# franchise_id = 0
+# for k, v in wiki_dict.items():
+#     associate = False
+#     if clean_title(k) in books_match and len(books_match[clean_title(k)]) > 0:
+#         for mov in v:
+#             if clean_title(mov) in movies_match and len(movies_match[clean_title(mov)]) > 0:
+#                 associate = True
+#                 for movie_product in movies_match[clean_title(mov)]:
+#                     product_to_franchise[movie_product['asin']] = franchise_id
+#         for book_product in books_match[clean_title(k)]:
+#             product_to_franchise[book_product['asin']] = franchise_id
+#     franchise_id += 1 if associate else 0
+#
+#
+
+
 if __name__ == "__main__":
     print(get_wikipedia_matching())
