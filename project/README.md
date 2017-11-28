@@ -18,32 +18,47 @@ interesting patterns).
 # Research questions
 
 - Are the reviews better for movie or the book?
+  - We will have to define more criteria and context to give a concrete answer to this question
 - What are the factors of success for each platform (ex. genre, ...)?
+  - This question hardly depends on the additional information fetching through the API,
+   as we do not have enough data to give a proper answer for now.
 - Can we distinguish populations that prefer a certain form of medium?
+  - We will answer this question via the analysis of users who gave reviews to both members of
+  a pair book/movie.
+  - This is also the occasion to build a clustering method that we may expand with a predictive role
 - Are there people buying all the products for a license?
+  - We have reduced this question with products meaning all the books and movies product linked to the same
+   pair book/movies. We did not studied yet the feasibility of expanding this relation to series of books or
+   movies.
 - Can we find interesting patterns when a release occurs on one platform?
+  - We do not know yet if we have enough (both in quantity and quality) data to answer this question.
+   We will, at least partially, answer it during the impact of the time in grading.
 - Can we find people buying the book after the release of a movie?
+  - Same analysis
 - Do the bad/good movie reviews mention the book?
+  - We will try to mix the use of sentiment analysis, overall grading and keywords in the review text to
+  answer this question.
 
 # Dataset
 
 We will use the [Amazon Product Data][amazon-data] dataset.
 We will mainly use the "Books" and "Movies & TV" subsets.
 
-We may also use other sources to help us with matching the books and movies (Wikipedia?).
+We also use [Wikipedia][wikipedia-titles] in order to have a list of matching books/movies titles.
+We might use the Amazon product API to obtain additionnal information about products (such as genre..)
 
-# A list of internal milestones up until project milestone 2
+# Next steps until Milestone 3
 
-- Setup a basic environment able to load the data and manipulate it (from the API? from the cluster? should we use a DB?)
-- Basic data description: plot distribution, check for missing values
-- Devise an algorithm to match different products related to the same Intellectual Property (IP)
-- Fetch additional product details
-- Perform preliminary analysis on a subset of known IPs and on a given period of time.
+- Improve matching between products and franchise :
+  - Improve matching using Wikipedia titles, for example by using text distance
+  - Consider other options, such as other sources or matching between Amazon products using title, description and so on.
 
-# Questions for TAs
 
-- Are we allowed to use the Amazon API to find missing product descriptions?
-- What do you prefer? Movies? Books?
+- Make a more in depth analysis of existing differences between movies and books for a same franchise (overall,sentiment in the reviews..)
 
+- Complete our analysis of the gap between grades made by the same user in the same IP : take the sentiment into account, the influence of the order of reviews in time..
+
+- Study the impact of other features such as the price of the product or the review date
 
 [amazon-data]: http://jmcauley.ucsd.edu/data/amazon/
+[wikipedia-titles]: https://en.wikipedia.org/wiki/Lists_of_fiction_works_made_into_feature_films
