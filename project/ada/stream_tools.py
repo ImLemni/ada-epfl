@@ -1,8 +1,16 @@
 from ada.data import write_data, read_data
-from ada.ordering import natural_comparator
+from ada.ordering import default_comparator
 
 
 def next_or_none(iterator):
+    """
+    Returns the next value of the iterator, or `None` if it reached the end.
+    This allows an easier way to consume the iterator than using `try/catch`
+    blocks if the iterated collection does not contain any `None` values.
+
+    :param iterator: Iterator to consume. It should not yield `None` values.
+    :return: The next value of the iterator, or `None` if there are no more values.
+    """
     try:
         return next(iterator)
     except StopIteration:
@@ -11,12 +19,13 @@ def next_or_none(iterator):
 
 def merge_sorted(left, right, comparator):
     """
-    Creates a sorted iterator by merging two smaller sorted iterators
+    Merges two iterables sorted by `comparator` into an combined iterable that is itself sorted by `comparator`.
 
-    :param left:
-    :param right:
-    :param comparator: Returns a negative value if a < b, 0 if equal, else positive
-    :return:
+    :param left: Iterable first sequence. This sequence must be ordered by `comparator`.
+    :param right: Iterable second sequence. This sequence must be ordered by `comparator`.
+    :param comparator: Comparator function accepting two arguments and returning a negative value if the first argument
+                       smaller, 0 if they are equal or a positive value otherwise.
+    :return: Iterable yielding items from both inputs and still sorted by `comparator`.
     """
     left_iterator = iter(left)
     right_iterator = iter(right)
@@ -99,7 +108,7 @@ def chunked_merge_sort(entries, comparator, items_per_chunk=100000):
     return merge_many_sorted(chunks, comparator)
 
 
-def left_join(left, right, key, comparator=natural_comparator):
+def left_join(left, right, key, comparator=default_comparator):
     """
     Yields pairs of (left_item, right_item) joined by the key `key` ordered by `comparator`.
 
@@ -128,12 +137,14 @@ def left_join(left, right, key, comparator=natural_comparator):
                 cur_right = next_or_none(right_iterator)
 
 
+
+
 if __name__ == "__main__":
     movies = read_data("meta_movies", None)
 
 
     def comparator(left, right):
-        return natural_comparator(left["asin"], right["asin"])
+        return default_comparator(left["asin"], right["asin"])
 
 
     meta_movies_asin_sorted = chunked_merge_sort(movies, comparator)

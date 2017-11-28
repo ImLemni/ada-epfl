@@ -1,10 +1,12 @@
-def natural_comparator(left, right):
+def default_comparator(left, right):
     """
-    Comparator for elements of a totally ordered set using the default comparators.
+    Comparator function using the comparison operators defined on the compared objects.
+    It returns `-1` if `left < right`, `0` if `left == right` and `1` otherwise.
+    This can be used for custom sorting functions.
 
-    :param left:
-    :param right:
-    :return:
+    :param left: Left element to compare
+    :param right: Right element to compare
+    :return: Comparison result
     """
     if left < right:
         return -1

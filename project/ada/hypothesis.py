@@ -1,7 +1,15 @@
 from ada.data import read_data
 
 
-def is_sorted_by_asin(entries):
+def is_sorted_by_asin(entries) -> bool:
+    """
+    Checks if the entries are sorted by their `asin` value.
+    Duplicates are allowed.
+    Prints a message if the entries are not sorted.
+
+    :param entries: The entries to check.
+    :return: Boolean indicating if the entries are sorted by increasing `asin` value.
+    """
     first = True
     prev = None
     for i, entry in enumerate(entries):
@@ -18,6 +26,13 @@ def is_sorted_by_asin(entries):
 
 
 def is_sorted_asin_unique(entries):
+    """
+    Checks if the provided entries sorted by `asin` have unique `asin` values.
+    Prints a message if the entries are not sorted.
+
+    :param entries: Entries to check, already sorted by `asin`.
+    :return: Boolean indicating if the `asin` values are unique.
+    """
     first = True
     prev = None
     for i, entry in enumerate(entries):
