@@ -1,6 +1,6 @@
 # Is the book better than the movie?
 
-# Abstract
+## Abstract
 
 Today, many Intellectual Properties (IP) are declined into multiple supports. For example, books are turned
 into movies, series, theater plays, video games; or the other way around. Each platform has its own
@@ -15,7 +15,7 @@ Finally, we expect to study time patterns and interactions between the releases 
 and customer behavior (we expect movie releases to boost book releases but there may be more
 interesting patterns).
 
-# Research questions
+## Research questions
 
 - Are the reviews better for movie or the book?
   - We will have to define more criteria and context to give a concrete answer to this question
@@ -39,7 +39,7 @@ interesting patterns).
   - We will try to mix the use of sentiment analysis, overall grading and keywords in the review text to
   answer this question.
 
-# Dataset
+## Dataset
 
 We will use the [Amazon Product Data][amazon-data] dataset.
 We will mainly use the "Books" and "Movies & TV" subsets.
@@ -47,7 +47,7 @@ We will mainly use the "Books" and "Movies & TV" subsets.
 We also use [Wikipedia][wikipedia-titles] in order to have a list of matching books/movies titles.
 We might use the Amazon product API to obtain additionnal information about products (such as genre..)
 
-# Next steps until Milestone 3
+## Next steps until Milestone 3
 
 - Improve matching between products and franchise :
   - Improve matching using Wikipedia titles, for example by using text distance
@@ -59,6 +59,29 @@ We might use the Amazon product API to obtain additionnal information about prod
 - Complete our analysis of the gap between grades made by the same user in the same IP : take the sentiment into account, the influence of the order of reviews in time..
 
 - Study the impact of other features such as the price of the product or the review date
+
+
+## Usage
+
+You need the `vaderSentiment` package:
+```bash
+$ source activate
+$ pip install vaderSentiment
+```
+
+You can configure the data directory by starting the notebook with the `ADA_DATA_PATH` environment
+variable. By default, it uses the `data` subdirectory.
+
+This is the directory where data is stored.
+
+```bash
+$ source activate
+$ ADA_DATA_PATH="/path/to/data" jupyter notebook
+```
+
+You can execute the file `Milestone2` to generate all the datafiles and plots.
+Most of helper functions are in the modules of the `ada` package (in this directory).
+
 
 [amazon-data]: http://jmcauley.ucsd.edu/data/amazon/
 [wikipedia-titles]: https://en.wikipedia.org/wiki/Lists_of_fiction_works_made_into_feature_films
