@@ -36,11 +36,10 @@ window.onscroll = function() {
   for(let i=0;i<12;i++){
     let counterid=i+1
     if (isVisible('counter'+counterid)) {
-      if (alreadytriggered[i]) {
-        break;
-      }
+      if (!alreadytriggered[i]) {
       alreadytriggered[i] = true;
       triggerCounterData(counterid)
+    }
     }
     else{
       alreadytriggered[i] = false;//To remove if we want to trigger only once
