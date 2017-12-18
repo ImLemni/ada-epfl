@@ -1,5 +1,6 @@
 import re
 import requests
+import unidecode
 from bs4 import BeautifulSoup
 
 from ada.progressbar import ProgressBar
@@ -52,11 +53,17 @@ def normalize_title(title):
     Normalizes the title by removing punctuation, extra spaces and parenthesized groups
     """
     title = title.lower()
+    title = unidecode.unidecode(title)
     # title = sub("\((.*film.*|.*movie.*)\)", "", title)
-    title = re.sub(r"\(.*\)", "", title)  # Remove parenthesized groups
-    title = re.sub(r"\s+", " ", title)  # Replace consecutive whitespaces by a single space
+    title = re.sub(r"\(.*?\)", "", title)  # Remove parenthesized groups
+    title = re.sub(r"\{.*?\}", "", title)
+    title = re.sub(r"\[.*?\]", "", title)
+    title = re.sub(r"&lt.*?&gt", "", title)  # Remove bad encoding groups
+    title = re.sub(r"(?:&amp|&lt|&gt|&quot)", "", title)  # Remove bad encoding
+    title = re.sub(r"(?:[\[\](),.!?;:\-\&]|dvd|vhs)", "", title)  # Remove punctuation
+    # Replace consecutive whitespaces by a single space
+    title = re.sub(r"\s+", " ", title)
     title = title.strip()
-    title = re.sub(r"(?:[\[\](),.!?;:]|dvd|vhs)", "", title)  # Remove punctuation
     return title
 
 
@@ -70,7 +77,6 @@ def group_meta_by_title(entries, raw_titles):
     cleaned_titles = set()
     for raw_title in raw_titles:
         cleaned_titles.add(normalize_title(raw_title))
-
     for entry in entries:
         if "title" not in entry:
             continue
@@ -81,7 +87,6 @@ def group_meta_by_title(entries, raw_titles):
         if cleaned_title not in result:
             result[cleaned_title] = []
         result[cleaned_title].append(entry)
-
     return result
 
 
