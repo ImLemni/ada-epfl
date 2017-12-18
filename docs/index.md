@@ -2,67 +2,141 @@
 layout: default
 ---
 
-## A Jekyll template for publishing single-page websites and articles that are incredibly readable and fully responsive
+## Can we finally be sure that Harry Potter is, from far, better as a book ?
 
 ### Introduction
 
-Today, many Intellectual Properties are declined into multiple supports. For example, books are turned into movies, series, theater plays, video games; or the other way around. Each platform has its own specificities and their audience may have different expectations. We will focus on books and movies/TV. We would like to find out what are the differences and similarities between these supports. Are books better rated than movies? Does the price or the time impact rating ? Can we identify different consumer profiles? We intend to use the Amazon products dataset. The reviews will help us to derive interest for a product. We are also able to find people who gave a review for movies and books of the same franchise aswell are the sentiment of their reviews. 
+Today, many Intellectual Properties are declined into multiple supports. For example, books are turned into movies, series, theater plays, video games; or the other way around. Each platform has its own specificities and their audience may have different expectations. We will focus on books and movies/TV.
+This common debate is really animated, who has never heard after watching a movie that : "It was good but I prefered the book" ?
+
+We would like to find out what are the differences and similarities between these supports. Are books better rated than movies? Does the price or the time impact rating ? Can we identify different consumer profiles? We intend to use the Amazon products dataset. The reviews will help us to derive interest for a product. We are also able to find people who gave a review for movies and books of the same franchise aswell are the sentiment of their reviews.
+
 
 ### Summary
 
-* Initial data
-* Filtering 
-* Final data
-* Impact of the time
-* Impact of the cost
-* Conclusion
+* [Initial data](#initial-data)
+* [Filtering](#filtering)
+* [Sentiment analysis and final data](#sentiment-analysis-and-final-data)
+* [First overview](#first-overview)
+* [Clustering reviews](#clustering-reviews)
+* [Categorizing users](#categorizing-users)
+* [Mentions of the book or the movie](#mentions-of-the-book-or-the-movie)
+* [Order of the reviews](#order-of-the-reviews)
+* [Users buying all the products](#users-buying-all-the-products)
+* [More criteria](#more-criteria)
+* [Conclusion](#conclusion)
 
 
-### Add social sharing buttons
+### Initial data
 
-Simply add the following line anywhere in your markdown:
+We used the Amazon dataset, especially reviews and metadata for books and Movies_and_TV categories.
+On one side we have reviews, containing for example the grade(refered as "overall" in the following), the review content and the user idea,
+on the other hand we have the metadata for a product with the title, the price or the description.
 
-<pre><code>{% raw  %}
-{% include sharing.html %}
-{% endraw %}
-</code></pre>
+#### Books
+<b id="counter1"></b>
+<b id="counter2"></b>
+<b id="counter3"></b>
 
-and get a nice responsive sharing ribbon.
+#### Movies
+<b id="counter4"></b>
+<b id="counter5"></b>
+<b id="counter6"></b>
 
-{% include sharing.html %}
 
-Add this at the bottom, or the top, or between every other paragraph if you're desprate for social validation.
+### Filtering
 
-Just remember to customize the buttons to fit your url in the `_includes/sharing.html` file. These buttons are made available and customizable by the good folks at kni-labs. See the documentation at [https://github.com/kni-labs/rrssb](https://github.com/kni-labs/rrssb) for more information.
+Now that we have gathered the data, we have to filter it. In order to get meaningful results,
+we have chosen to scrap wikipedia to obtain associations between books and movies.
+<a href ="https://en.wikipedia.org/wiki/Lists_of_fiction_works_made_into_feature_films"> <img src="images/wikipediatitles.png" alt="wikipedia association"></a>
 
-### Font awesome is also included
+The complex task is then to associate a title collected via wikipedia with an Amazon product id.
+Let's take an example : we want to match the movie `The Three Musketeers` with the product `The Three Musketeers (Golden Films) [VHS]`
+<img src="images/filtering.png" alt="wikipedia association">
+As it is not necessarily enough, we also take care of accents, punctuation, keywords such as `dvd` or `vhs` or badly encoded characted
 
-<i class="fa fa-quote-left fa-3x fa-pull-left fa-border"></i> Now you can use all the cool icons you want! [Font Awesome](http://fontawesome.io) is indeed awesome. But wait, you don't need this sweetness and you don't want that little bit of load time from the font awesome css? No problem, just disable it in the `config.yml` file, and it won't be loaded.
+We then keep only movies and books for which we could manage to find at least one matching product for both.
+#### Books
+<b id="counter7"></b>
+<b id="counter8"></b>
+<b id="counter9"></b>
 
-<ul class="fa-ul">
-  <li><i class="fa-li fa fa-check-square"></i>you can make lists...</li>
-  <li><i class="fa-li fa fa-check-square-o"></i>with cool icons like this,</li>
-  <li><i class="fa-li fa fa-spinner fa-spin"></i>even ones that move!</li>
-</ul>
+#### Movies
+<b id="counter10"></b>
+<b id="counter11"></b>
+<b id="counter12"></b>
 
-If you need them, you can stick any of the [605 icons](http://fontawesome.io/icons/) anywhere, with any size you like. ([See documentation](http://fontawesome.io/examples/))
+### Sentiment analysis and final data
 
-<i class="fa fa-building"></i>&nbsp;&nbsp;<i class="fa fa-bus fa-lg"></i>&nbsp;&nbsp;<i class="fa fa-cube fa-2x"></i>&nbsp;&nbsp;<i class="fa fa-paper-plane fa-3x"></i>&nbsp;&nbsp;<i class="fa fa-camera-retro fa-4x">
+Using the [vader](https://github.com/cjhutto/vaderSentiment) package we gave to each text review a value between 0 and 1 (originally between -1 and 1) representing its overall sentiment :
+  * Between 0 and 0.25 the review is negative
+  * Between 0.25 and 0.75 the review is neutral
+  * Abose it is positive
+This analysis take into account negations, punctuation (!!!),  word-shape, emoticons acronyms and so on, which are often used in our reviews.
 
-### Add images to make your point
+Before ending the data handling part, we also computed a special subset containing only books reviews which can be matched witha review about a paired movie made by the same user (and vice versa). This subset is composed of 2000 users and 3000 paired reviews.
 
-Images play nicely with this template as well. Add diagrams or charts to make your point, and the template will fit them in appropriately.
+### First overview
 
-<img src="images/hello.svg" alt="sample image">
+TODO : Basic analysis between books and movies
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+### Clustering reviews
 
-Thanks to [Shu Uesengi](https://github.com/chibicode) for inspiring and providing the base for this template with his excellent work, [solo](https://github.com/chibicode).
+*You might think that when you read a book and see a movie, you always prefer one so you will give a good grade and positive review to one and worse grade and review to the other, but is it always that strict ?*
 
-<hr>
+We have used the Kmeans clustering method to try to answer this question. We have decided to fix the number of categories to 5 and we used the combination of overall grades(`overall`) and sentiment measurement (refered as `compound`) for both movies and books as a metric.
 
-##### Footnotes:
+TODO insert picture here
 
-[^1]: This is a footnote. Click to return.
+If we look at the meaning of each cluster we obtain something close to this :
+* Cluster 0 (in orange): good grades and reviews for movies and books
+* Cluster 1 (in yellow): Bad review and bad grade for movies, good review and grade for books
+* Cluster 2 (in green): Generally good but negative reviews for books
+* Cluster 3 (in red): Bad grade for movies
+* Cluster 4 (in black): Bad reviews for both movies and books
 
-[^2]: Here is another.
+### Categorizing users
+
+*But everyone knows that there is always this guy, who always have read the book and always criticize the movie !*
+
+**Do people who give many reviews always belong to the same cluster ?**
+
+TODO : plot and redo analysis
+
+We can see a big majority for cluster 0: people who give good grades and reviews for both movies and books in a review tend to do the same for all franchises. However we can not really say that users always give bad grades for movies (clusters 1 and 3)
+
+### Mentions of the book or the movie
+
+*One thing that is sure, is that if you have read the book and have watched the movie, a bad grade is obviously influenced by the other one*
+
+**Do the worst/better grades and reviews mention the book/movie ?**
+
+TODO plot + analysis
+
+### Order of the reviews
+
+*blablabla*
+
+**Does reading the book before seing the movie has an impact ?**
+
+### Users buying all the products
+
+*Like for Star Wars, there are people buying all products linked to the same movie, they must give really good grades!*
+
+### More criteria
+
+*Ok, you won.. Now just tell me if the book is better than the movie*
+
+Before trying to give an answer to our initial question it remains a few important criteria to analyse.
+
+**Do the grades and reviews changed during time ?**
+
+Since we have data over a pretty long range of time (1996-2014), it is interesting to look at the evolution of grades and reviews. However we lack some contextual information that could help us interpret the results with more confidence.
+
+**Is the cost impactful ?**
+
+**Quality of the product**
+
+One big bias that we had to talk about is the one generated by the quality of the product. With a book for example, with the same text content there are many other criteria that are taken into account in the final grade (quality of the paper,format..).
+
+### Conclusion
