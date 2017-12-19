@@ -187,7 +187,7 @@ So to conclude here are the top 5(according to Amazon reviews, where we make sur
   * [Timeline](https://en.wikipedia.org/wiki/Timeline)
   * [The Scarlet letter](https://en.wikipedia.org/wiki/The_Scarlet_Letter)
   * [The Amityville Horror](https://en.wikipedia.org/wiki/The_Amityville_Horror)
-  * [The Hobbit](https://en.wikipedia.org/wiki/The_Hobbit) (*we added the 6th one, so we get an answer to the title text)*)
+  * [The Hobbit](https://en.wikipedia.org/wiki/The_Hobbit) (*we added the 6th one, so we get an answer to the title text*)
 * Movies better than books :
   * [Jane Eyre](https://en.wikipedia.org/wiki/Jane_Eyre_(2011_film))
   * [The phantom of the opera](https://en.wikipedia.org/wiki/The_Phantom_of_the_Opera_(1986_musical))
