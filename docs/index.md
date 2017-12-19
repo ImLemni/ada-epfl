@@ -6,8 +6,8 @@ layout: default
 
 ### Introduction
 
-Today, many Intellectual Properties are declined into multiple supports. For example, books are turned into movies, series, theater plays, video games; or the other way around. Each platform has its own specificities and their audience may have different expectations. We will focus on books and movies/TV.
-This common debate is really animated, who has never heard after watching a movie that : "It was good but I prefered the book" ?
+Today, many Intellectual Properties are declined into multiple supports. For example, books are turned into movies, series, theatre plays, video games; or the other way around. Each platform has its own specificities and their audience may have different expectations. We will focus on books and movies/TV.
+This common debate is really animated, who has never heard after watching a movie that : "It was good but I preferred the book" ?
 
 We would like to find out what are the differences and similarities between these supports. Are books better rated than movies? Does the price or the time impact rating ? Can we identify different consumer profiles? We intend to use the Amazon products dataset. The reviews will help us to derive interest for a product. We are also able to find people who gave a review for movies and books of the same franchise aswell are the sentiment of their reviews.
 
@@ -19,7 +19,7 @@ We would like to find out what are the differences and similarities between thes
 * [Sentiment analysis and final data](#sentiment-analysis-and-final-data)
 * [First overview](#first-overview)
 * [Clustering reviews](#clustering-reviews)
-* [Categorizing users](#categorizing-users)
+* [Categorising users](#categorising-users)
 * [Mentions of the book or the movie](#mentions-of-the-book-or-the-movie)
 * [Users buying all the products](#users-buying-all-the-products)
 * [More criteria](#more-criteria)
@@ -29,7 +29,7 @@ We would like to find out what are the differences and similarities between thes
 ### Initial data
 
 We used the Amazon dataset, especially reviews and metadata for books and Movies_and_TV categories.
-On one side we have reviews, containing for example the grade(refered as "overall" in the following), the review content and the user idea,
+On one hand we have reviews, containing for example the grade(referred as "overall" in the following), the review content and the user idea,
 on the other hand we have the metadata for a product with the title, the price or the description.
 
 #### Books
@@ -52,7 +52,7 @@ we have chosen to scrap wikipedia to obtain associations between books and movie
 The complex task is then to associate a title collected via wikipedia with an Amazon product id.
 Let's take an example : we want to match the movie `The Three Musketeers` with the product `The Three Musketeers (Golden Films) [VHS]`
 <img src="images/filtering.png" alt="wikipedia association">
-As it is not necessarily enough, we also take care of accents, punctuation, keywords such as `dvd` or `vhs` or badly encoded characted
+As it is not necessarily enough, we also take care of accents, punctuation, keywords such as `dvd` or `vhs` or badly encoded character
 
 We then keep only movies and books for which we could manage to find at least one matching product for both.
 #### Books
@@ -73,19 +73,19 @@ Using the [vader](https://github.com/cjhutto/vaderSentiment) package we gave to 
   * Abose it is positive
 This analysis take into account negations, punctuation (!!!),  word-shape, emoticons acronyms and so on, which are often used in our reviews.
 
-Before ending the data handling part, we also computed a special subset containing only books reviews which can be matched witha review about a paired movie made by the same user (and vice versa). This subset is composed of 2000 users and 3000 paired reviews.
+Before ending the data handling part, we also computed a special subset containing only books reviews which can be matched with a review about a paired movie made by the same user (and vice versa). This subset is composed of 2000 users and 3000 paired reviews.
 
 ### First overview
 
-Now that we have treated the data it is time to begin the analysis in order to answer our inital question : is the book better than the movie?
+Now that we have treated the data it is time to begin the analysis in order to answer our initial question : is the book better than the movie?
 
 <img src="images/compare_grades.png">
 
-It seems that when we group them by franchise, books have higher overall grades and less variance than movies, moreover the first quartile is clearly higer for the books.
+It seems that when we group them by franchise, books have higher overall grades and less variance than movies, moreover the first quartile is clearly higher for the books.
 
 <img src="images/sentiment-all.png">
 
-When we look at it as a whole, positivity of sentiments are really comparable, even slightly better for the movies.
+When we look at it as a whole, positiveness of sentiments are really comparable, even slightly better for the movies.
 
 But it would be way too simple to keep these results and conclude, so let's analyse the bias and the major factors that affect our grades and reviews.
 
@@ -93,7 +93,7 @@ But it would be way too simple to keep these results and conclude, so let's anal
 
 *You might think that when you read a book and see a movie, you always prefer one so you will give a good grade and positive review to one and worse grade and review to the other, but is it always that strict ?*
 
-We have used the Kmeans clustering method to try to answer this question. We have decided to fix the number of categories to 5 and we used the combination of overall grades(`overall`) and sentiment measurement (refered as `compound`) for both movies and books as a metric.
+We have used the Kmeans clustering method to try to answer this question. We have decided to fix the number of categories to 5 and we used the combination of overall grades(`overall`) and sentiment measurement (referred as `compound`) for both movies and books as a metric.
 
 It is not so easy to have a clear overview of the result because we use 4 dimensions but here is a summary :
 <img src="images/ada-img/kmeans-3d.png" alt="3D cluster">
@@ -109,9 +109,9 @@ If we look at the meaning of each cluster we obtain something close to this :
 * Cluster 3 (in red): Bad grade for movies
 * Cluster 4 (in black): Bad reviews for both movies and books
 
-### Categorizing users
+### Categorising users
 
-*But everyone knows that there is always this guy, who always have read the book and always criticize the movie !*
+*But everyone knows that there is always this guy, who always has read the book and always criticises the movie !*
 
 **Do people who give many reviews always belong to the same cluster ?**
 
@@ -121,16 +121,16 @@ We can see a big majority for cluster 0: people who give good grades and reviews
 
 ### Mentions of the book or the movie
 
-*One thing that is sure, is that if you have read the book and have watched the movie, a bad grade is obviously influenced by the other one*
+*One thing that is sure, is that if you have read the book and have watched the movie, a bad grade is obviously influenced by the other one.*
 
 **Do the worst/better grades and reviews mention the book/movie ?**
 
-First we will try to see the evolution of positivity of the comment whether it mentions the books or not
+First we will try to see the evolution of positiveness of the comment whether it mentions the books or not.
 <img src="images/ada-img/positivity-in-movie-reviews.png">
 
 It appears that people give more positive review when they don't talk about the book, maybe because they enjoyed the film without comparing it to the book ? (this is not really significant when they give reviews to the books).
 
-When we look at the difference between grades, there is indeed someting to notice, it seems that people give worst grades when they mention the book or the movie.
+When we look at the difference between grades, there is indeed something to notice, it seems that people give worst grades when they mention the book or the movie.
 
 <img src="images/ada-img/book-reference-by-movie-overall.png">
 <img src="images/ada-img/movie-reference-by-book-overall.png">
@@ -143,11 +143,11 @@ The second one represents the percentage of book reviews that mention the associ
 
 *Like for Star Wars, there are people buying all products linked to the same movie, they must give really good grades!*
 
-Well this criteria is not really impactful :
+Well this criteria is not really impacting :
 
 <img src="images/ada-img/large-buyers-for-same-franchise-against-all-buyers.png">
 
-It is really difficult to draw a conclusion here, taking the error bars into account. It seems really close, maybe large buyers(people who buy than 50% of the products when there are more than 2 products) give slightly worse grades.
+It is really difficult to draw a conclusion here, taking the error bars into account. It seems really close, maybe large buyers(people who buy more than 50% of the products when there are more than 2 products) give slightly worse grades.
 
 ### More criteria
 
@@ -166,9 +166,9 @@ Since we have data over a pretty long range of time (1996-2014), it is interesti
 We have studied the impact of the order of the reviews for the same franchise without noticing any clear difference. That means that people
 does not tend to give better grades or reviews for a book whether they have already watched the movie or not.
 
-**Is the cost impactful ?**
+**Is the cost impacting ?**
 
-The overall grades are negatively correlated with the price, this is also the case for the positivity of reviews. However this behavior is similar for both the movies and the books.
+The overall grades are negatively correlated with the price, this is also the case for the positiveness of reviews. However this behavior is similar for both the movies and the books.
 
 <img src="images/ada-img/price-range-to-overall-score.png">
 
@@ -178,9 +178,9 @@ One big bias that we had to talk about is the one generated by the quality of th
 
 ### Conclusion
 
-Taking into account all the precedent points and bias, it would not sound really reasnnable to give a definitive answer to our question.
+Taking into account all the precedent points and bias, it would not sound really reasonable to give a definitive answer to our question.
 But it would be a shame if you made the effort to read this whole article and didn't have the right to a small gift.
-So to conclude here are the top 5(according to amazon reviews, where we make sure to have more than 8 reviewers per franchise) of :
+So to conclude here are the top 5(according to Amazon reviews, where we make sure to have more than 8 reviewers per franchise) of :
 * Books better than movies :
   * [Flowers in the attic](https://en.wikipedia.org/wiki/Flowers_in_the_Attic)
   * [Queen of the damned](https://en.wikipedia.org/wiki/The_Vampire_Chronicles)
@@ -201,7 +201,7 @@ So to conclude here are the top 5(according to amazon reviews, where we make sur
   * [Heidi](https://en.wikipedia.org/wiki/Heidi)
   * There is no 5 because it is Queen of the damned again
 * Books that will make you give more negative reviews than for the movies
-  * [Logan's run](https://en.wikipedia.org/wiki/Logan%27s_Run_(film))
+  * [Logan's run](https://en.wikipedia.org/wiki/Logan's_Run_(film))
   * [Red dragon](https://en.wikipedia.org/wiki/Red_Dragon_(2002_film))
   * [East of eden](https://en.wikipedia.org/wiki/East_of_Eden_(film))
   * [The grapes of Wrath](https://en.wikipedia.org/wiki/The_Grapes_of_Wrath_(film))
