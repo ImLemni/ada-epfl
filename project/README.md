@@ -47,7 +47,7 @@ We will mainly use the "Books" and "Movies & TV" subsets.
 We also use [Wikipedia][wikipedia-titles] in order to have a list of matching books/movies titles.
 We might use the Amazon product API to obtain additionnal information about products (such as genre..)
 
-## Next steps until Milestone 3
+## ~~Next steps until Milestone 3~~
 
 - Improve matching between products and franchise :
   - Improve matching using Wikipedia titles, for example by using text distance
@@ -82,8 +82,23 @@ $ ADA_DATA_PATH="/path/to/data" jupyter notebook
 You can execute the file `Milestone2` to generate all the datafiles and plots.
 Most of helper functions are in the modules of the `ada` package (in this directory).
 
+## Milestone 3
 
-TODO: Mention that we changed the matching function
+You can find most of the analysis in the `project.ipynb` Jupyter notebook.
+The milestone 3 starts around the middle. It relies on the data created by the
+milestone 2. If you already generated the data of the milestone 2, you can directly
+load it in the milestone 3 and start from there.
+
+You can also [read our Data Story](https://demurgos.github.io/ada-epfl/).
+
+## Contributions
+
+- Florian did the bulk of data frame computations, plots and data story
+- Charles mainly worked on the preprocessing, data loading, matching and most of the comments.
+- Adrien contributed to the selection of our them during the first milestome, but he has
+  been absent since then.
+
+Charle and Florian will both work on the final results.
 
 [amazon-data]: http://jmcauley.ucsd.edu/data/amazon/
 [wikipedia-titles]: https://en.wikipedia.org/wiki/Lists_of_fiction_works_made_into_feature_films
