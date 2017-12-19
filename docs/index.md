@@ -2,7 +2,7 @@
 layout: default
 ---
 
-## Can we finally be sure that Harry Potter is, from far, better as a book ?
+## Can we finally be sure that The Hobbit is, from far, better as a book ?
 
 ### Introduction
 
@@ -21,7 +21,6 @@ We would like to find out what are the differences and similarities between thes
 * [Clustering reviews](#clustering-reviews)
 * [Categorizing users](#categorizing-users)
 * [Mentions of the book or the movie](#mentions-of-the-book-or-the-movie)
-* [Order of the reviews](#order-of-the-reviews)
 * [Users buying all the products](#users-buying-all-the-products)
 * [More criteria](#more-criteria)
 * [Conclusion](#conclusion)
@@ -78,7 +77,17 @@ Before ending the data handling part, we also computed a special subset containi
 
 ### First overview
 
-TODO : Basic analysis between books and movies
+Now that we have treated the data it is time to begin the analysis in order to answer our inital question : is the book better than the movie?
+
+<img src="images/compare_grades.png">
+
+It seems that when we group them by franchise, books have higher overall grades and less variance than movies, moreover the first quartile is clearly higer for the books.
+
+<img src="images/sentiment-all.png">
+
+When we look at it as a whole, positivity of sentiments are really comparable, even slightly better for the movies.
+
+But it would be way too simple to keep these results and conclude, so let's analyse the bias and the major factors that affect our grades and reviews.
 
 ### Clustering reviews
 
@@ -86,7 +95,12 @@ TODO : Basic analysis between books and movies
 
 We have used the Kmeans clustering method to try to answer this question. We have decided to fix the number of categories to 5 and we used the combination of overall grades(`overall`) and sentiment measurement (refered as `compound`) for both movies and books as a metric.
 
-TODO insert picture here
+It is not so easy to have a clear overview of the result because we use 4 dimensions but here is a summary :
+<img src="images/ada-img/kmeans-3d.png" alt="3D cluster">
+
+Let's expand a bit to have a better understanding of the clusters, here we only selected the projection on the sentiments.
+We clearly see the difference between at least 4 clusters.
+<img src="images/ada-img/kmeans-review-sentiment.png" alt="sentiment cluster">
 
 If we look at the meaning of each cluster we obtain something close to this :
 * Cluster 0 (in orange): good grades and reviews for movies and books
@@ -101,7 +115,7 @@ If we look at the meaning of each cluster we obtain something close to this :
 
 **Do people who give many reviews always belong to the same cluster ?**
 
-TODO : plot and redo analysis
+<img src="images/ada-img/reviewers-in-unique-cluster-per-cluster.png">
 
 We can see a big majority for cluster 0: people who give good grades and reviews for both movies and books in a review tend to do the same for all franchises. However we can not really say that users always give bad grades for movies (clusters 1 and 3)
 
@@ -111,17 +125,29 @@ We can see a big majority for cluster 0: people who give good grades and reviews
 
 **Do the worst/better grades and reviews mention the book/movie ?**
 
-TODO plot + analysis
+First we will try to see the evolution of positivity of the comment whether it mentions the books or not
+<img src="images/ada-img/positivity-in-movie-reviews.png">
 
-### Order of the reviews
+It appears that people give more positive review when they don't talk about the book, maybe because they enjoyed the film without comparing it to the book ? (this is not really significant when they give reviews to the books).
 
-*blablabla*
+When we look at the difference between grades, there is indeed someting to notice, it seems that people give worst grades when they mention the book or the movie.
 
-**Does reading the book before seing the movie has an impact ?**
+<img src="images/ada-img/book-reference-by-movie-overall.png">
+<img src="images/ada-img/movie-reference-by-book-overall.png">
+
+The first graph represents the percentage of movie reviews that mention the book per grade, e.g : about 80% of grades 2 talk about the book.
+The second one represents the percentage of book reviews that mention the associated movie.
+
 
 ### Users buying all the products
 
 *Like for Star Wars, there are people buying all products linked to the same movie, they must give really good grades!*
+
+Well this criteria is not really impactful :
+
+<img src="images/ada-img/large-buyers-for-same-franchise-against-all-buyers.png">
+
+It is really difficult to draw a conclusion here, taking the error bars into account. It seems really close, maybe large buyers(people who buy than 50% of the products when there are more than 2 products) give slightly worse grades.
 
 ### More criteria
 
@@ -131,12 +157,55 @@ Before trying to give an answer to our initial question it remains a few importa
 
 **Do the grades and reviews changed during time ?**
 
-Since we have data over a pretty long range of time (1996-2014), it is interesting to look at the evolution of grades and reviews. However we lack some contextual information that could help us interpret the results with more confidence.
+Since we have data over a pretty long range of time (1996-2014), it is interesting to look at the evolution of grades and reviews. However we lack some contextual information that could help us interpret the results with more confidence, for example for this loss in 2010 (the graph shows the overall grades for movies).
+
+<img src="images/ada-img/movies-overall-over-time.png">
+
+**Order of the reviews**
+
+We have studied the impact of the order of the reviews for the same franchise without noticing any clear difference. That means that people
+does not tend to give better grades or reviews for a book whether they have already watched the movie or not.
 
 **Is the cost impactful ?**
+
+The overall grades are negatively correlated with the price, this is also the case for the positivity of reviews. However this behavior is similar for both the movies and the books.
+
+<img src="images/ada-img/price-range-to-overall-score.png">
 
 **Quality of the product**
 
 One big bias that we had to talk about is the one generated by the quality of the product. With a book for example, with the same text content there are many other criteria that are taken into account in the final grade (quality of the paper,format..).
 
 ### Conclusion
+
+Taking into account all the precedent points and bias, it would not sound really reasnnable to give a definitive answer to our question.
+But it would be a shame if you made the effort to read this whole article and didn't have the right to a small gift.
+So to conclude here are the top 5(according to amazon reviews, where we make sure to have more than 8 reviewers per franchise) of :
+* Books better than movies :
+  * [Flowers in the attic](https://en.wikipedia.org/wiki/Flowers_in_the_Attic)
+  * [Queen of the damned](https://en.wikipedia.org/wiki/The_Vampire_Chronicles)
+  * [Timeline](https://en.wikipedia.org/wiki/Timeline)
+  * [The Scarlet letter](https://en.wikipedia.org/wiki/The_Scarlet_Letter)
+  * [The Amityville Horror](https://en.wikipedia.org/wiki/The_Amityville_Horror)
+  * [The Hobbit](https://en.wikipedia.org/wiki/The_Hobbit) (*there is a 6 because it's The Hobbit*)
+* Movies better than books :
+  * [Jane Eyre](https://en.wikipedia.org/wiki/Jane_Eyre_(2011_film))
+  * [The phantom of the opera](https://en.wikipedia.org/wiki/The_Phantom_of_the_Opera_(1986_musical))
+  * [Goldfinger](https://en.wikipedia.org/wiki/Goldfinger_(film))
+  * [Jaws](https://en.wikipedia.org/wiki/Jaws_(film))
+  * [The invisible man](https://en.wikipedia.org/wiki/The_Invisible_Man_(film))
+* Books that will make you give kinder reviews than for the movies
+  * [The Picture of Dorian Gray]("https://en.wikipedia.org/wiki/The_Picture_of_Dorian_Gray")
+  * [The Hellbound heart](https://en.wikipedia.org/wiki/The_Hellbound_Heart)
+  * [The time machine](https://en.wikipedia.org/wiki/The_Time_Machine)
+  * [Heidi](https://en.wikipedia.org/wiki/Heidi)
+  * There is no 5 because it is Queen of the damned again
+* Books that will make you give more negative reviews than for the movies
+  * [Logan's run](https://en.wikipedia.org/wiki/Logan%27s_Run_(film))
+  * [Red dragon](https://en.wikipedia.org/wiki/Red_Dragon_(2002_film))
+  * [East of eden](https://en.wikipedia.org/wiki/East_of_Eden_(film))
+  * [The grapes of Wrath](https://en.wikipedia.org/wiki/The_Grapes_of_Wrath_(film))
+  * [American psycho](https://en.wikipedia.org/wiki/American_Psycho_(film))
+
+
+*Note that the provided links are not fully representatives of all Amazon products*
