@@ -83,5 +83,7 @@ You can execute the file `Milestone2` to generate all the datafiles and plots.
 Most of helper functions are in the modules of the `ada` package (in this directory).
 
 
+TODO: Mention that we changed the matching function
+
 [amazon-data]: http://jmcauley.ucsd.edu/data/amazon/
 [wikipedia-titles]: https://en.wikipedia.org/wiki/Lists_of_fiction_works_made_into_feature_films
